@@ -5,7 +5,7 @@ import { assert, expect } from "chai";
 
 describe("EscPosEncoder", function () {
   const encoder = new EscPosEncoder();
-  const rasterEncoder = new EscPosEncoder({ imageMode: "raster" });
+  // const rasterEncoder = new EscPosEncoder({ imageMode: "raster" });
 
   describe("text(hello)", function () {
     const result = encoder.text("hello").encode();
