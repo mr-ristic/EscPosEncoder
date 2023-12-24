@@ -42,14 +42,12 @@
     "@rollup/plugin-terser": "^0.4.1",
     "chai": "^4.3.7",
     "eslint": "^8.39.0",
-    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard": "^17.1.0",
     "mocha": "^10.2.0",
     "rollup": "^3.20.7"
   },
   "dependencies": {
-    "canvas": "^2.11.2",
-    "canvas-dither": "^1.0.1",
-    "canvas-flatten": "^1.0.1",
     "codepage-encoder": "^2.0.4",
     "linewrap": "^0.2.1"
   },
