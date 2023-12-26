@@ -1075,14 +1075,8 @@ class EscPosEncoder {
 
     if (model in models) {
       this._queue([
-        0x1d,
-        0x28,
-        0x6b,
-        0x04,
-        0x00,
-        0x31,
-        0x41,
-        models[model],
+        0x1d, 0x28, 0x6b, 0x04, 0x00, 0x31, 0x41,
+        // models[model],
         0x00,
       ]);
     } else {
