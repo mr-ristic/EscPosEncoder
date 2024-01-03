@@ -1165,7 +1165,8 @@ class EscPosEncoder {
 
     // Set size of QR code
     size = typeof size === "undefined" || size < 1 || size > 9 ? 9 : size;
-    this._queue([0x1b, 0x5a, `0x0${size}`, 0x4c, 0x06]);
+
+    this._queue([0x1b, 0x5a, size, 0x4c, 0x06]);
 
     // Set QR code data
     const bytes = CodepageEncoder.encode(value, "iso88591");
