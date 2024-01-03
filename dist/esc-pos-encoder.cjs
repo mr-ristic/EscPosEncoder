@@ -1153,45 +1153,24 @@ class EscPosEncoder {
   //   return this;
   // }
 
-  qrcode(value, model, size, errorlevel) {
+  qrcode(value, size) {
     if (this._embedded) {
       throw new Error("QR codes are not supported in table cells or boxes");
     }
 
     this._queue([0x0a]); // Force printing the print buffer and moving to a new line
 
-    // Set QR code model
-    const models = { 1: 0x31, 2: 0x32 };
-    model = model in models ? models[model] : models["2"];
-    this._queue([0x1d, 0x28, 0x6b, 0x04, 0x00, 0x31, 0x41, model, 0x00]);
+    // Set the header
+    this._queue([0x1d, 0x5a, 0x02]);
 
     // Set size of QR code
-    size = typeof size === "undefined" || size < 1 || size > 8 ? 6 : size;
-    this._queue([0x1d, 0x28, 0x6b, 0x03, 0x00, 0x31, 0x43, size]);
-
-    // Set error correction level
-    const errorlevels = { l: 0x30, m: 0x31, q: 0x32, h: 0x33 };
-    errorlevel =
-      errorlevel in errorlevels ? errorlevels[errorlevel] : errorlevels.m;
-    this._queue([0x1d, 0x28, 0x6b, 0x03, 0x00, 0x31, 0x45, errorlevel]);
+    size = typeof size === "undefined" || size < 1 || size > 9 ? 9 : size;
+    this._queue([0x1b, 0x5a, `0x0${size}`, 0x4c, 0x06]);
 
     // Set QR code data
     const bytes = CodepageEncoder.encode(value, "iso88591");
-    const length = bytes.length + 3;
-    this._queue([
-      0x1d,
-      0x28,
-      0x6b,
-      length % 0xff,
-      length / 0xff,
-      0x31,
-      0x50,
-      0x30,
-      ...bytes,
-    ]);
-
-    // Print QR code
-    this._queue([0x1d, 0x28, 0x6b, 0x03, 0x00, 0x31, 0x51, 0x30]);
+    const length = bytes.length;
+    this._queue([length % 256, Math.floor(length / 256), ...bytes]);
 
     this._flush();
 
